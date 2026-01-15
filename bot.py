@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 # ✅ ВПИШИ СЮДА СВОЙ TELEGRAM ID (и других админов, если нужно)
-ADMINS = {123456789, 987654321}
+ADMINS = {7741423792}
 
 
 def is_admin(user_id: int) -> bool:
@@ -284,3 +284,4 @@ async def run():
 
 if __name__ == "__main__":
     asyncio.run(run())
+
