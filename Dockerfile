@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-# Системные зависимости для Playwright/Chromium
+# 1) Системные зависимости Chromium
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     libnss3 \
@@ -24,15 +24,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Установим зависимости Python
+# 2) Python зависимости
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Скопируем проект
-COPY . .
+# 3) Фиксируем место, куда Playwright кладёт браузеры (внутрь образа)
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
-# Установим браузер Playwright в образ
+# 4) Устанавливаем Chromium в этот путь
 RUN python -m playwright install chromium
 
-# Запуск бота
+# 5) Копируем проект
+COPY . .
+
+# 6) Запуск
 CMD ["python", "bot.py"]
